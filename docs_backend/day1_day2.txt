@@ -1,0 +1,81 @@
+ Learning Outcomes from Day 1 & Day 2
+Since you have completed Day 1 (Project Setup) and Day 2 (User Authentication), you have already implemented:  
+✔ Express.js Server Setup
+✔ MongoDB Connection with Mongoose  
+✔ Environment Configuration using `.env`
+✔ JWT-based Authentication (Signup & Login) 
+✔ Password Hashing using `bcryptjs` 
+✔ Authentication Routes & Controllers  
+
+📖 Concepts Learning
+
+1️⃣ Express.js Basics
+- Middleware (`app.use()`, `express.json()`, `cors()`, `morgan()`)
+- Routing (`app.get()`, `app.post()`, `express.Router`)
+- Error Handling (`try-catch`, `express error handling middleware`)
+
+🔹 Learning Resource:
+- [Express.js Documentation](https://expressjs.com/)  
+
+2️⃣ MongoDB & Mongoose
+- Connecting MongoDB with Mongoose
+- Mongoose Schema & Models
+- CRUD Operations (Create, Read, Update, Delete)
+- Mongoose Middleware (`pre`, `post`)
+- Indexes for Performance Optimization
+- Populating Related Data (`populate()`)
+
+🔹 Learning Resource: 
+- [Mongoose Documentation](https://mongoosejs.com/docs/guide.html)  
+
+3️⃣ Authentication & Security
+- JWT (JSON Web Token):  
+  🔹 How JWTs work & why they are used for authentication  
+  🔹 Difference between **access token** and **refresh token**  
+  🔹 How to protect private routes using JWT  
+
+- Password Hashing with bcrypt.js:  
+  🔹 Why we hash passwords before storing  
+  🔹 How hashing works  
+
+🔹 Learning Resource:
+- [JWT.io Documentation](https://jwt.io/)  
+- [bcrypt.js Documentation](https://www.npmjs.com/package/bcryptjs)  
+
+4️⃣ Environment Variables & Security
+- Why use `.env` files? 
+- Preventing hardcoded secrets in code  
+- Best practices for securing `.env` files  
+
+🔹 Learning Resource:  
+- [dotenv package](https://www.npmjs.com/package/dotenv)  
+
+💬 Interview Questions (Express, MongoDB, Auth) 
+These are common backend developer interview questions based on what you've implemented:
+
+🟢 Express.js Questions
+1️⃣ What is Express.js and how is it different from Node.js?  
+2️⃣ How does middleware work in Express?  
+3️⃣ What is `express.json()` and why is it needed?  
+4️⃣ What is CORS, and why do we use it?  
+5️⃣ How do you handle errors in Express?  
+
+🟢 MongoDB & Mongoose Questions
+6️⃣ How does Mongoose differ from MongoDB?  
+7️⃣ What is the difference between `find()`, `findOne()`, and `findById()` in Mongoose?  
+8️⃣ How does `populate()` work in Mongoose?  
+9️⃣ What are MongoDB indexes, and why are they important?  
+🔟 What are Mongoose middleware (`pre` & `post` hooks)?  
+
+🟢 Authentication & Security Questions
+🔹 What is JWT, and how does it work?  
+🔹 Why do we use password hashing, and how does bcrypt.js work?  
+🔹 How can you protect APIs that require authentication in Express?  
+🔹 What are some common security vulnerabilities in Express apps, and how do you prevent them?  
+🔹 What is the difference between `localStorage`, `sessionStorage`, and cookies for storing tokens?  
+
+ What’s Next? (Day 3-4)
+For Day 3 & Day 4, you will work on Invoice & Product Management:
+✔ Creating Invoice & Product Models 
+✔ CRUD operations for Invoices & Products  
+✔ Search, Filtering, and Pagination  

@@ -1,0 +1,227 @@
+Express JS Basics:
+
+1. Node vs express ,real deal
+
+ANS:  Node.js vs Express.js: The Real Deal (Easy Explanation)
+
+🟢 Think of Node.js as the brain (CPU) of a computer.
+A CPU can perform basic operations like addition, but we use a calculator app to make it easy.
+Similarly, Node.js can handle HTTP requests using its built-in `http` module, but writing code from scratch is complex.  
+
+🟢 Think of Express.js as a user-friendly app (like Chrome or Brave).  
+Just like we don’t use a default phone browser because it's slow or lacks features,
+we don’t directly use Node’s `http` module in big projects—it’s difficult to manage, requires long code, 
+and lacks built-in utilities. Instead, we use Express.js for better structure, routing, and middleware.  
+
+Behind the Scenes:
+At the core,Express.js still uses Node.js. 
+It’s just a layer on top of Node’s `http` module that makes development faster and cleaner.  
+
+Why is Node's `http` module difficult?
+✅ Manual Routing: In pure Node.js, you have to manually handle routes like `/home`, `/about`, etc.   
+✅ Longer Code:Express provides shortcuts (`app.get()`, `app.post()`), while Node’s `http` requires raw request handling.  
+✅ No Middleware Support:In Node.js, handling CORS, logging, or authentication requires manual implementation.
+                          Express has built-in middleware for these.  
+Final Verdict:
+Node.js = Raw Power (Handles everything but is hard to manage).  
+Express.js = Smart Wrapper (Simplifies everything, making it the industry standard).  
+
+That’s why developers prefer Express.js in real-world projects because at the end of the day,
+Express still uses Node’s `http` module but makes our life easier!
+
+
+Features	                   Node.js (Without Express)	                 Node.js (With Express)
+
+1.Ease of Use	                   Complex and long code	                     Simple, short, and readable
+2.Routing	                       Manually handled with http.createServer()     app.get(), app.post() makes it easy
+3.Middleware	                   No built-in support	                         Built-in middleware handling
+4.Code Length	                   More boilerplate code	                     Less code, more features
+
+Examples of node without express js:
+
+const http = require('http');
+
+const server = http.createServer((req, res) => {
+    res.writeHead(200, { 'Content-Type': 'text/plain' });
+    res.end('Hello World');
+});
+
+server.listen(3000, () => {
+    console.log('Server running on port 3000');
+});
+
+ Issue: Manually handling routes, headers, and responses is time-consuming and requires more code.
+
+Examples of node with express:
+
+const express = require('express');
+const app = express();
+
+app.get('/', (req, res) => {
+    res.send('Hello World');
+});
+
+app.listen(3000, () => {
+    console.log('Server running on port 3000');
+});
+
+Advantage: Less code, better readability, and built-in routing support.
+At the end of the day, Express.js is just a wrapper over Node.js that 
+makes development faster, easier, and more efficient!
+
+2. what is express js?
+
+ANS: Express.js is a fast, minimalist framework for Node.js that simplifies server-side development.
+     It is available as a package on npm and provides built-in features to handle routing, middleware,
+     and HTTP requests easily.
+
+3. why express.js?
+
+ANS: a. Simplifies Server Code → Writing pure Node.js servers using the http module is complex and lengthy. 
+                                 So, Express makes it shorter and easier.
+     b. Faster Development → Provides built-in methods for routing, request handling, and middleware,
+                             making development faster and more efficient.
+     c. Middleware Support → Easily add authentication, logging, error handling, etc., without modifying core code.
+     d. Scalability → Perfect for small to large-scale applications, REST APIs, web apps, and real-time apps.
+     e. Community & Plugins → Has a huge ecosystem with many ready-made packages to enhance functionality.
+
+4. middle ware:Middleware is a function that runs before reaching the actual route. 
+               It can modify the request (req), response (res), or even stop the request from proceeding.
+   E.g. Middleware is like a security guard at the entrance of a mall. Every visitor (request) 
+   must pass through security (middleware) before they can enter the mall (route handler).
+
+   CODE: 
+
+   const express = require('express');
+   const app = express();
+    // Middleware function
+    const myMiddleware = (req, res, next) => {
+        console.log('Middleware executed before the route!');
+        next(); // Pass the request to the next function (route handler)
+    };
+    // Use middleware for all routes
+    app.use(myMiddleware);
+    app.get('/home', (req, res) => {
+        res.send('Welcome to Home Page!');
+    });
+    app.listen(3000, () => {
+       console.log('Server is running on port 3000');
+    });
+    
+    WORKING OF CODE:
+
+    1. User requests /home.
+    2. Middleware (myMiddleware) runs first and logs a message.
+    3. Middleware calls next(), so Express moves to the /home route.
+    4. Response is sent (Welcome to Home Page!).
+
+    Practical Uses of Middleware:
+
+    1. Logging Requests (Who is visiting the site?)
+    2. Authentication (Is the user logged in?)
+    3. Error Handling (If something goes wrong, show a friendly error message)
+    4. Parsing Data (Convert raw JSON to JavaScript object)
+
+    Example: Middleware to Log Requests:
+
+    const logger = (req, res, next) => {
+       console.log(`${req.method} request made to: ${req.url}`);
+       next();
+    };
+    app.use(logger);
+
+5. request and response:All data from user side like user's location,device info and other things.
+                        In response , there is controls from which we can send reponse from server.
+                        Next is just a push so that our next things getting executed 
+                        other wise it will remain stuck in the middle ware.
+
+    Explanation of `app.get("/")` Code:
+        app.get("/", function (req, res) {
+            res.send("Hello World");
+        });
+    How it Works:
+    1. User Request (`req`):
+        - When a user opens `"http://localhost:3000/"`, a request (`req`) is sent to the server.
+        - The `req` object contains information about the request, like headers, query parameters,and body.
+
+    2. Server Response (`res`):
+       - The server processes the request and sends a response (`res`) using `res.send()`.
+       - In this case, `res.send("Hello World")` sends the text `"Hello World"` as a response to the user.
+
+    Real-Life Example:Think of Instagram:
+       - When you open Instagram, your browser (client) sends a request (`req`) to Instagram's servers.
+       - The Instagram server processes this request and sends a response (`res`), 
+         which contains your feed, messages, etc.
+       - Here, `"Hello World"` is like Instagram sending you your feed as a response.
+
+    Relation with Middleware (`app.use()`):
+       - If you add middleware using `app.use()`, it will execute before the request reaches `app.get("/")`.
+       - Example:
+            app.use(function (req, res, next) {
+                console.log("Middleware working");
+                next(); // Moves to next middleware or route handler
+            });
+            app.get("/", function (req, res) {
+                res.send("Hello World");
+            });
+    Execution Flow:
+    - A request comes to `/`.
+    - Middleware runs first and logs `"Middleware working"`.
+    - Then `app.get("/")` runs and sends `"Hello World"` to the user.
+
+6. route parameters
+7. templates engines=> many templates engines like ejs,pug,handle bars,jade, etc.EJS is very similar to HTML.
+                       Ye ek style of markup se convert karke aapko HTML deta h.Ek markup style jo baad mein
+                       markup mein vonvert ho jayega.
+      HTML vs EJS:
+      1. HTML alone cannot perform calculations.
+      2. EJS can execute JavaScript, allowing you to embed logic, such as 1 + 2 = 3, directly in the template.
+      3. We can't add dynamic value in HTML but in ejs, it is possible.
+
+      EJS Setup Steps:
+      1. Install EJS: npm i ejs
+      2. Configure EJS:
+          app.set("view engine", "ejs");
+      3. Create a views folder and store your .ejs files inside.
+      4. Use res.render("fileName") instead of res.send(), ensuring the file is 
+        inside views without specifying .ejs.==> render karte waqt views folder 
+                                                 ke ander wali hi koi file ka naam likhein,
+                                                 and render fn mein .ejs mention na karein.
+
+8. static files: images,style sheets and frontend JavaScript set up karna.
+                steps to create static files:1. create folder called public.
+                                             2. create three folders inside it: images,stylesheets,javascripts.
+                                             3. Configure the express static in script.js file.
+                                             4. Understand the path.
+
+9. HTTP Methods-get and post
+10. Error handling
+
+
+11. Routing
+In Express.js, a Route is like an address in a city, and Routing is how requests travel to the correct address.
+URL is the Route: Example → https://example.com/products
+Routing is the Code: The logic that tells the server what to do when a request comes to that URL.
+                     The process of making routes is called routing.
+                     routes: /profile,/contact,/home/about/contact, etc.
+
+--> What is Routing?
+    ANS: Routing means defining URLs (routes) and specifying what should happen when someone accesses them.
+
+In Express.js, routing is done using methods like:
+
+app.get() → For fetching data
+app.post() → For adding new data
+app.put() → For updating data
+app.delete() → For deleting data
+
+E.g. when a user visits /about, they will see "This is the About Page".
+     URLs are the routes, and the app.get() methods define their behavior (routing).
+
+--> What is "ALL" in Express.js Routing?
+    ANS: The app.all() method is used to handle any type of HTTP request (GET, POST, PUT, DELETE, etc.)
+    at a specific route.
+
+    E.g. Whether a user makes a GET, POST, PUT, or DELETE request to /anything, this handler will always respond.
+           It’s useful for logging, authentication, or handling unknown routes.
+

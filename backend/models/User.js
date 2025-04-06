@@ -5,7 +5,12 @@ const UserSchema = new mongoose.Schema(
   {
     name: { type: String, required: true },
     email: { type: String, unique: true, required: true },
-    password: { type: String, required: true },
+    password: {
+        type: String,
+        required: function () {
+            return !this.googleId;
+        },
+      },
     role: { type: String, enum: ["admin", "staff"], default: "staff" },
     googleId: { type: String }, // For Google OAuth
   },

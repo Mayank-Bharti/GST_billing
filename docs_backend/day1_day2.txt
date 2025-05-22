@@ -79,3 +79,27 @@ For Day 3 & Day 4, you will work on Invoice & Product Management:
 ✔ Creating Invoice & Product Models 
 ✔ CRUD operations for Invoices & Products  
 ✔ Search, Filtering, and Pagination  
+
+
+Authentication
+
+1. Normal Login and Register- done
+2. Google Login - done
+3. google register  with set password so that users who login through google can also do normal login.-- done
+4. Normal login users also do google login if normal user have google id-- done
+5. Both google and normal login and google and normal register for both staff and admin.
+                                        -- partially yes staff can do both google and normal login 
+                                          but admin only do normal login
+6. Both login and register are proper secure.-- partially yes
+7. Automatic Logout and log out end point -- done 
+8. Forgot Password + Reset via Email
+9.  Password Strength Validation
+10.  Rate Limiting (Brute-force Protection)
+11. Email Verification
+12.  CORS, HTTPS, CSRF--done
+13. Consider implementing Refresh Tokens for long sessions (optional, not mandatory if 1h expiry is okay)  
+14.  Add unit tests for signup, login, and protected routes   
+15.Add input validation using `express-validator` or `Joi` for cleaner request payloads           
+16. Add rate limiting to auth routes (e.g., `express-rate-limit`) to prevent brute-force                                                    
+17. Your Google OAuth `/google/callback` currently returns JSON. For production, redirect it to frontend and pass token in URL/query/cookie 
+18. For OAuth or traditional login, you can store tokens in **HTTP-only cookies** for added security (avoid XSS) -done                           |

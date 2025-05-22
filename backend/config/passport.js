@@ -12,26 +12,41 @@ passport.use(
     },
     async (accessToken, refreshToken, profile, done) => {
       try {
-        // Check if user already exists
-        let user = await User.findOne({ googleId: profile.id });
+        const email = profile.emails[0].value;
 
-        if (!user) {
+        let user = await User.findOne({ email });
+
+        if (user) {
+          if (!user.googleId) {
+            user.googleId = profile.id;
+            await user.save();
+            // Inform user Google login linked
+            return done(null, { 
+              user, 
+              token: jwt.sign({ id: user._id, role: user.role }, process.env.JWT_SECRET, { expiresIn: "1h" }),
+              message: "Existing account found. Linked Google login."
+            });
+          } else {
+            // Google login already linked
+            return done(null, {
+              user,
+              token: jwt.sign({ id: user._id, role: user.role }, process.env.JWT_SECRET, { expiresIn: "1h" }),
+              message: "Login successful via Google."
+            });
+          }
+        } else {
           user = await User.create({
             name: profile.displayName,
-            email: profile.emails[0].value,
+            email,
             googleId: profile.id,
-            role: "staff", // default
+            role: "staff",
+          });
+          return done(null, {
+            user,
+            token: jwt.sign({ id: user._id, role: user.role }, process.env.JWT_SECRET, { expiresIn: "1h" }),
+            message: "New user created and logged in via Google."
           });
         }
-
-        // Generate JWT token
-        const token = jwt.sign(
-          { id: user._id, role: user.role },
-          process.env.JWT_SECRET,
-          { expiresIn: "1h" }
-        );
-
-        done(null, { user, token });
       } catch (err) {
         done(err, false);
       }

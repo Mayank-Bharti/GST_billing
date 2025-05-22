@@ -1,17 +1,35 @@
 const express = require("express");
-const { signup, login } = require("../controllers/authController");
+const csrf = require("csurf");
+const { signup, login, setPassword, logout } = require("../controllers/authController");
 const { authMiddleware, adminMiddleware } = require("../middleware/auth");
 const passport=require("passport");
 const router = express.Router();
+const csrfProtection = csrf({ cookie: true });
 require("../config/passport");
-// Public Routes
-router.post("/signup", signup);
-router.post("/login", login);
 
-// Protected Route (User Info)
+// CSRF token route
+router.get("/csrf-token", csrfProtection, (req, res) => {
+  res.cookie("csrf_token", req.csrfToken(), {
+    httpOnly: false,
+    sameSite: "Strict",
+    secure: process.env.NODE_ENV === "production",
+    maxAge: 1000 * 60 
+  });
+  res.json({ csrfToken: req.csrfToken() });
+});
+// Public Routes
+router.post("/signup", csrfProtection,signup);
+router.post("/login",csrfProtection, login);
+
+// Authenticated user info
 router.get("/me", authMiddleware, (req, res) => {
   res.json({ message: "User authenticated", user: req.user });
 });
+
+// Protected Route (User Info)
+router.post("/set-password", authMiddleware, setPassword);
+router.post("/logout", authMiddleware, csrfProtection, logout);
+
 // Admin-Only Route
 router.get("/admin", authMiddleware, adminMiddleware, (req, res) => {
   res.json({ message: "Admin access granted" });
@@ -48,11 +66,12 @@ router.get(
   passport.authenticate("google", { session: false }),
   (req, res) => {
     res.json({
-      message: "Google OAuth successful",
+      message: req.user.message || "Google OAuth successful",
       token: req.user.token,
       user: req.user.user,
     });
   }
 );
+
 
 module.exports = router;

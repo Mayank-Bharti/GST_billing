@@ -5,7 +5,7 @@ import passport from "passport";
 import session from "express-session";
 import cookieParser from "cookie-parser";
 
-import "../config/passport.js";
+import "./passport.js";
 import userRoutes from "../routes/userRoutes.js";
 import authRoutes from "../routes/authRoutes.js";
 

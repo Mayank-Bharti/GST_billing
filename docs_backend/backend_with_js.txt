@@ -119,3 +119,13 @@ Here’s a comparison of **CommonJS (`require`)** and **ES Modules (`import`)** 
 | Tooling support?  | Basic                | Modern + Advanced        |
 
 ---
+NOTE UNLESS FACE ERROR:
+
+In ES modules, all import statements are hoisted and executed before any other code runs — 
+even if the import is physically placed lower in the file.
+So, even if you call dotenv.config() at the top of your index.js, if passport.js is imported somewhere 
+during the chain of imports, it runs before that dotenv.config() call actually executes.
+This is why environment variables might be undefined inside modules imported early.
+If you want to be safe and avoid this timing problem, you can:
+Call dotenv.config() at the very top of every file that needs env variables, OR
+Organize your imports so that files depending on env vars are imported after dotenv.config() has run.

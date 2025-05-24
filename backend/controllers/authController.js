@@ -1,20 +1,19 @@
-const User = require("../models/User");
-const jwt = require("jsonwebtoken");
-const bcrypt = require("bcryptjs");
+import User from "../models/User.js";
+import jwt from "jsonwebtoken";
+import bcrypt from "bcryptjs";
 
-exports.signup = async (req, res) => {
+// Signup
+export const signup = async (req, res) => {
   try {
     const { name, email, password, role } = req.body;
 
-    // Check if user already exists
     const userExists = await User.findOne({ email });
     if (userExists) return res.status(400).json({ message: "User already exists" });
 
-    // Create a new user (Password is hashed in the model)
     const user = new User({ name, email, password, role });
     await user.save();
 
-     const token = jwt.sign(
+    const token = jwt.sign(
       { id: user._id, email: user.email, role: user.role },
       process.env.JWT_SECRET,
       { expiresIn: "1m" }
@@ -24,7 +23,7 @@ exports.signup = async (req, res) => {
       httpOnly: true,
       secure: process.env.NODE_ENV === "production",
       sameSite: "Strict",
-      maxAge: 1000 * 60 ,
+      maxAge: 1000 * 60,
     });
 
     res.status(201).json({
@@ -41,19 +40,17 @@ exports.signup = async (req, res) => {
   }
 };
 
-exports.login = async (req, res) => {
+// Login
+export const login = async (req, res) => {
   try {
     const { email, password } = req.body;
 
-    // Check if user exists
     const user = await User.findOne({ email });
     if (!user) return res.status(400).json({ message: "User not found" });
 
-    // Compare password
     const isMatch = await bcrypt.compare(password, user.password);
     if (!isMatch) return res.status(400).json({ message: "Invalid credentials" });
 
-    // Generate JWT Token
     const token = jwt.sign(
       { id: user._id, role: user.role },
       process.env.JWT_SECRET,
@@ -62,9 +59,9 @@ exports.login = async (req, res) => {
 
     res.cookie("token", token, {
       httpOnly: true,
-      secure: process.env.NODE_ENV === "production", // send over HTTPS only in production
-      sameSite: "Strict", // prevent CSRF
-      maxAge: 1000 * 60, // 1 hour
+      secure: process.env.NODE_ENV === "production",
+      sameSite: "Strict",
+      maxAge: 1000 * 60,
     });
 
     res.json({
@@ -81,18 +78,18 @@ exports.login = async (req, res) => {
     res.status(500).json({ message: "Server error", error: error.message });
   }
 };
-exports.setPassword = async (req, res) => {
+
+// Set Password
+export const setPassword = async (req, res) => {
   try {
     const { password } = req.body;
 
-    // Use email from authenticated token
-    const user = await User.findOne({email: req.user.email});
+    const user = await User.findOne({ email: req.user.email });
 
     if (!user || !user.googleId) {
       return res.status(400).json({ message: "User not found or not a Google account" });
     }
 
-    // Hash and set password
     user.password = password;
     await user.save();
 
@@ -102,7 +99,8 @@ exports.setPassword = async (req, res) => {
   }
 };
 
-exports.logout = (req, res) => {
+// Logout
+export const logout = (req, res) => {
   res.clearCookie("token", {
     httpOnly: true,
     secure: process.env.NODE_ENV === "production",
@@ -110,4 +108,3 @@ exports.logout = (req, res) => {
   });
   res.json({ message: "Logged out successfully" });
 };
-

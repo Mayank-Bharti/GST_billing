@@ -1,11 +1,12 @@
-const express = require("express");
-const csrf = require("csurf");
-const { signup, login, setPassword, logout } = require("../controllers/authController");
-const { authMiddleware, adminMiddleware } = require("../middleware/auth");
-const passport=require("passport");
+import express from "express";
+import csrf from "csurf";
+import passport from "passport";
+import { signup, login, setPassword, logout } from "../controllers/authController.js";
+import { authMiddleware, adminMiddleware } from "../middleware/auth.js";
+import "../config/passport.js";
+
 const router = express.Router();
 const csrfProtection = csrf({ cookie: true });
-require("../config/passport");
 
 // CSRF token route
 router.get("/csrf-token", csrfProtection, (req, res) => {
@@ -13,13 +14,14 @@ router.get("/csrf-token", csrfProtection, (req, res) => {
     httpOnly: false,
     sameSite: "Strict",
     secure: process.env.NODE_ENV === "production",
-    maxAge: 1000 * 60 
+    maxAge: 1000 * 60,
   });
   res.json({ csrfToken: req.csrfToken() });
 });
+
 // Public Routes
-router.post("/signup", csrfProtection,signup);
-router.post("/login",csrfProtection, login);
+router.post("/signup", csrfProtection, signup);
+router.post("/login", csrfProtection, login);
 
 // Authenticated user info
 router.get("/me", authMiddleware, (req, res) => {
@@ -35,7 +37,7 @@ router.get("/admin", authMiddleware, adminMiddleware, (req, res) => {
   res.json({ message: "Admin access granted" });
 });
 
-//Admin dashboard
+// Admin dashboard
 router.get("/dashboard/admin", authMiddleware, adminMiddleware, (req, res) => {
   res.json({
     message: "Welcome to Admin Dashboard",
@@ -56,7 +58,8 @@ router.get("/dashboard/staff", authMiddleware, (req, res) => {
 });
 
 // Initiate login
-router.get("/google",
+router.get(
+  "/google",
   passport.authenticate("google", { scope: ["profile", "email"] })
 );
 
@@ -73,5 +76,4 @@ router.get(
   }
 );
 
-
-module.exports = router;
+export default router;

@@ -1,14 +1,16 @@
-const express = require("express");
-const cors = require("cors");
-const morgan = require("morgan");
-const passport = require("passport");
-const session = require("express-session");
-const cookieParser = require("cookie-parser"); 
-require("../config/passport");
+import express from "express";
+import cors from "cors";
+import morgan from "morgan";
+import passport from "passport";
+import session from "express-session";
+import cookieParser from "cookie-parser";
+
+import "../config/passport.js";
+import userRoutes from "../routes/userRoutes.js";
+import authRoutes from "../routes/authRoutes.js";
 
 const app = express();
 
-// Middleware
 app.use(express.json());
 app.use(cookieParser());
 app.use(cors());
@@ -21,13 +23,10 @@ app.use(session({
   cookie: { secure: process.env.NODE_ENV === "production" },
 }));
 
-// Initialize passport
 app.use(passport.initialize());
 app.use(passport.session());
 
-// Routes (All API routes will be registered here)
-app.use("/api/users", require("../routes/userRoutes"));
-app.use("/api/auth", require("../routes/authRoutes"));
+app.use("/api/users", userRoutes);
+app.use("/api/auth", authRoutes);
 
-
-module.exports = app;
+export default app;

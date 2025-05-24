@@ -1,7 +1,7 @@
-const passport = require("passport");
-const GoogleStrategy = require("passport-google-oauth20").Strategy;
-const User = require("../models/User");
-const jwt = require("jsonwebtoken");
+import passport from "passport";
+import { Strategy as GoogleStrategy } from "passport-google-oauth20";
+import User from "../models/User.js";
+import jwt from "jsonwebtoken";
 
 passport.use(
   new GoogleStrategy(
@@ -53,7 +53,6 @@ passport.use(
     }
   )
 );
-
 // Serialize/Deserialize
 passport.serializeUser((data, done) => {
   done(null, data);

@@ -1,0 +1,121 @@
+Intro to Backend:
+
+Lecture 1:
+
+Prerequisite:
+
+1. programming language like Js,cpp,php,golang,java etc.. with framework
+2. DB with framework like ORM and ODM
+
+Server is a software which serves. mobile is also act as server.
+
+Browser <----> API <----> Backend <---> DB=>Another continent
+or
+mobile 
+
+-->A JS based Backend
+
+-->data,file ,3rd party(api)
+--> A js routine: node js/Bun/Deno
+--> Package.json,.env (Readme,git,prettier,lint)
+-->index file
+--> App file
+--> Constants file
+
+Directory:
+
+1. src
+2. DB
+3. Model
+4. Controllers
+5. Routes
+6. Middlewares
+7. Utils
+8. More(depends)
+
+Lecture 2: 
+                  Express
+                  get request
+computer/mobile  <-----------> Server
+
+listen: working of express
+/:home Routes
+/login:login setup
+
+Use of nodemon:
+when any file has some changes and that 
+changes will start their working when we
+save file and restart the server but 
+nodemon automatically restart server 
+when we save the file.we don't need to
+restart server manually again and again.
+
+require is just a fn this is why we write require inside if condn and fn.Import must live inside root we can't nest
+them inside fn.
+
+Here’s a comparison of **CommonJS (`require`)** and **ES Modules (`import`)** in terms of **advantages and disadvantages**:
+
+---
+
+## 🔄 CommonJS (`require`)
+
+> Used by default in Node.js before ES Modules.
+
+### ✅ Advantages:
+
+* **Supported everywhere in Node.js**: Fully supported in all Node.js versions.
+* **Dynamic loading**: You can use `require()` conditionally or inside functions.
+* **Synchronous**: Modules are loaded synchronously, which is simple and predictable in small apps.
+* **Great for legacy code**: Most older Node.js libraries still use `require()`.
+
+### ❌ Disadvantages:
+
+* **Not future-proof**: Modern tools and standards are moving toward ESM.
+* **Not compatible with `import`-only libraries**: Some new libraries support only ES Modules.
+* **No static analysis**: Tools like bundlers and tree-shakers (e.g., Webpack, Rollup) can't optimize `require()` code easily.
+* **Synchronous nature can be a bottleneck** in large-scale applications.
+
+---
+
+## 📦 ES Modules (`import`)
+
+> Official JavaScript module system, part of the ECMAScript standard.
+
+### ✅ Advantages:
+
+* **Future-proof**: The modern, standardized approach to JavaScript modules.
+* **Static structure**: Enables better performance optimizations like **tree-shaking**, **code splitting**, and **faster bundling**.
+* **Asynchronous loading**: Can import modules dynamically (`import()`).
+* **Supports both client (browser) and server (Node.js)** codebases—ideal for full-stack development.
+* **Readable and cleaner syntax** with better tooling integration.
+
+### ❌ Disadvantages:
+
+* **Configuration needed in Node.js**: Requires `"type": "module"` in `package.json`.
+* **No top-level `require()`**: Some old npm packages only support `require`.
+* **Cannot use `__dirname` and `__filename` directly** (you have to manually calculate them).
+* **Asynchronous by default**: Might be less intuitive if you're used to synchronous module loading.
+
+---
+
+## When to Use What?
+
+| Scenario                          | Recommendation                   |
+| --------------------------------- | -------------------------------- |
+| Legacy project or quick script    | ✅ Use `require`                  |
+| Modern scalable application       | ✅ Use `import`                   |
+| Mixed ecosystem (old + new libs)  | ⚠️ Choose based on compatibility |
+| Frontend + backend (Next.js etc.) | ✅ Use `import` (uniformity)      |
+
+---
+
+| Feature           | `require` (CommonJS) | `import` (ES Modules)    |
+| ----------------- | -------------------- | ------------------------ |
+| Sync or Async?    | Synchronous          | Asynchronous (top-level) |
+| Tree-shaking?     | No                 | Yes                    |
+| Used in frontend? | Rarely             | Yes                    |
+| Dynamic loading?  | Easy               | With `import()`        |
+| Ecosystem trend?  | 🔻 Declining         | 🔺 Growing               |
+| Tooling support?  | Basic                | Modern + Advanced        |
+
+---

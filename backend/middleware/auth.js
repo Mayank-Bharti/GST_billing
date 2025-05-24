@@ -1,7 +1,7 @@
-const jwt = require("jsonwebtoken");
-const User = require("../models/User");
+import jwt from "jsonwebtoken";
+import User from "../models/User.js";
 
-exports.authMiddleware = async (req, res, next) => {
+export const authMiddleware = async (req, res, next) => {
   const token = req.header("Authorization");
   if (!token) return res.status(401).json({ message: "Access denied. No token provided." });
 
@@ -10,14 +10,15 @@ exports.authMiddleware = async (req, res, next) => {
     const user = await User.findById(decoded.id);
     if (!user) return res.status(404).json({ message: "User not found" });
 
-    req.user = user; // Full user object
+    req.user = user; // Attach full user object
     next();
   } catch (error) {
     res.status(401).json({ message: "Invalid token" });
   }
 };
+
 // Role-Based Access Control (RBAC)
-exports.adminMiddleware = (req, res, next) => {
+export const adminMiddleware = (req, res, next) => {
   if (req.user.role !== "admin") {
     return res.status(403).json({ message: "Access denied. Admins only." });
   }

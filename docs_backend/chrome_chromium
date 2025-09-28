@@ -1,0 +1,51 @@
+## 1. **What they are**
+
+### **Chromium**
+
+- It’s the **open-source base project**.
+- Anyone can view, modify, or use its code.
+- Used as the foundation for browsers like Chrome, Edge, Brave, and Opera.
+
+### **Google Chrome**
+
+- Built **on top of Chromium**, but includes **extra Google features**.
+- Closed-source components are added.
+
+---
+
+## 2. Key Differences
+
+| Feature                           | Chromium                  | Google Chrome                                  |
+| --------------------------------- | ------------------------- | ---------------------------------------------- |
+| Open-source                       | Yes                       | Partially (not fully)                          |
+| Updates                           | Manual or via third party | Automatic                                      |
+| Google services                   | No                        | Yes (Sync, Translate, Safe Browsing)           |
+| Media codecs (e.g., mp4, Netflix) | Limited                   | Full support                                   |
+| Proprietary features              | None                      | Included                                       |
+| Stability                         | Less tested               | More stable                                    |
+| Default tracking                  | Minimal                   | Includes Google tracking components            |
+| Extensions                        | Supported                 | Supported                                      |
+| Screen-sharing / WebRTC           | Fully supported           | Supported but sometimes restricted by policies |
+
+---
+
+## 3. Why your issue got solved with Chromium
+
+Even though both are similar:
+
+- **Chromium is “clean”** → no custom settings, extensions, or policies.
+- Some platforms detect Chromium differently than Chrome.
+- Chromium doesn’t come with Google-specific restrictions or disabled flags.
+- Better compatibility with screen capture APIs in some controlled setups.
+
+So if the assessment tool couldn’t access screen-sharing through your Chrome installation (because of flags, permissions, policies, or version quirks), installing Chromium offered a fresh, default environment that just worked.
+
+---
+
+## 4. Which one should you use?
+
+- For **normal daily use**: Google Chrome
+- For **testing, development, or bypassing restrictions**: Chromium
+- For **privacy-focused browsing**: Chromium (or Brave)
+
+---

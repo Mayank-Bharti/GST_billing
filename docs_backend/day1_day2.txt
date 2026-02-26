@@ -103,3 +103,28 @@ Authentication
 16. Add rate limiting to auth routes (e.g., `express-rate-limit`) to prevent brute-force                                                    
 17. Your Google OAuth `/google/callback` currently returns JSON. For production, redirect it to frontend and pass token in URL/query/cookie 
 18. For OAuth or traditional login, you can store tokens in **HTTP-only cookies** for added security (avoid XSS) -done                           |
+
+
+1. Authentication:
+Register
+Login
+Google Login (Staff)
+Password Hashing
+JWT
+HTTP-only cookie
+
+2. Authorization:
+Role-based middleware
+Protect admin routes
+Protect staff routes
+
+3. User Management:
+Update profile
+Change password
+Activate/Deactivate user (admin feature)
+
+4. Security:
+Rate limiting
+Input validation
+Email verification 
+Strong password rule

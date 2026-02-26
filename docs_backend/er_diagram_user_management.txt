@@ -1,0 +1,68 @@
+                                   ┌────────────────────┐
+                                   │        ROLE        │
+                                   ├────────────────────┤
+                                   │ role_id (PK)       │
+                                   │ role_name (UQ)     │
+                                   │ description        │
+                                   │ created_at         │
+                                   └─────────┬──────────┘
+                                             │ 1
+                                             │
+                                             │
+                                             │ M
+                                  ┌──────────▼───────────┐
+                                  │         USER         │
+                                  ├──────────────────────┤
+                                  │ user_id (PK)         │
+                                  │ name                 │
+                                  │ email (UQ)           │
+                                  │ password_hash        │
+                                  │ phone                │
+                                  │ profile_image        │
+                                  │ auth_provider(google)│
+                                  │ is_active            │
+                                  │ last_login           │
+                                  │ role_id (FK)         │
+                                  │ created_at           │
+                                  │ updated_at           │
+                                  └───────┬──────────────┘
+                                          │ 1
+                                          │
+                                          │ M
+                    ┌─────────────────────▼────────────────────┐
+                    │               USER_OAUTH                  │
+                    ├───────────────────────────────────────────┤
+                    │ oauth_id (PK)                             │
+                    │ user_id (FK)                               │
+                    │ provider (google, github)                  │
+                    │ provider_user_id                           │
+                    │ access_token                               │
+                    │ refresh_token                              │
+                    │ token_expiry                               │
+                    └───────────────────────────────────────────┘
+
+
+                                          │ 1
+                                          │
+                                          │ M
+                              ┌───────────▼────────────┐
+                              │     REFRESH_TOKEN      │
+                              ├────────────────────────┤
+                              │ token_id (PK)          │
+                              │ user_id (FK)           │
+                              │ token                  │
+                              │ expiry_date            │
+                              │ is_revoked             │
+                              │ created_at             │
+                              └────────────────────────┘
+
+
+
+        ┌────────────────────┐                         ┌──────────────────────┐
+        │     PERMISSION     │                         │    ROLE_PERMISSION   │
+        ├────────────────────┤                         ├──────────────────────┤
+        │ permission_id (PK) │◄───────────────┐        │ role_id (FK)         │
+        │ permission_name    │                │ M     N│ permission_id (FK)   │
+        │ module_name        │                └────────► composite PK         │
+        │ description        │                         └──────────────────────┘
+        └────────────────────┘

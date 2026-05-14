@@ -13,6 +13,9 @@ const UserSchema = new mongoose.Schema(
     },
     role: { type: String, enum: ["admin", "staff"], default: "staff" },
     googleId: { type: String }, // For Google OAuth
+    resetPasswordToken: String,
+    resetPasswordExpire: Date,
+    status: { type: String, enum: ["active", "inactive"], default: "active" },
   },
   { timestamps: true }
 );
